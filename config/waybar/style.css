@@ -1,0 +1,110 @@
+@import "/home/raul/.cache/wal/colors-waybar.css";
+* {
+    border: none;
+    border-radius: 0;
+    font-family: 'Noto Sans', 'JetBrainsMono Nerd Font';
+    font-size: 15px;
+    min-height: 0px;
+}
+
+window#waybar {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background: transparent;
+    color: @foreground;
+    border-radius: 16px;
+    padding: 6px 12px;
+}
+
+#modules-left,
+#modules-center,
+#modules-right {
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+#workspaces,
+#backlight,
+#pulseaudio,
+#network,
+#clock,
+#battery,
+#tray,
+#custom-launcher,
+#custom-power,
+.modules-center > .group {
+    background-color: @background;
+    color: @foreground;
+    padding: 4px 12px;
+    margin: 6px 4px;
+    border-radius: 12px;
+    border: 1px solid @color1;
+}
+#backlight:hover,
+#pulseaudio:hover,
+#network:hover,
+#battery:hover,
+#clock:hover,
+#custom-launcher:hover,
+#custom-power:hover {
+    background-color: @color1;
+    color: @foreground;
+}
+
+#workspaces button {
+    padding: 0 6px;
+    color: @color8;
+    background: transparent;
+    border-radius: 8px;
+}
+
+#workspaces button.active {
+    color: @color2;
+}
+
+#workspaces button:hover {
+    background: @color7;
+    color: @background;
+}
+
+#mpris,
+#custom-prev,
+#custom-next {
+    background: @background;
+    padding: 0px;
+    margin: 0 4px;
+    border-radius: 12px;
+    border: 1px solid @color1;
+}
+
+#battery.charging,
+#battery.plugged {
+    color: @color2;
+    background-color: @background;
+}
+
+#battery.critical:not(.charging) {
+    color: @color1;
+    background-color: @background;
+}
+
+#custom-launcher,
+#custom-power {
+    padding-top: 6px;
+    padding-bottom: 2px;
+}
+
+#custom-launcher,
+#custom-power-menu {
+    padding: 4px 10px;
+    margin: 4px;
+    min-width: 28px;
+    min-height: 28px;
+}
+
+#custom-launcher label,
+#custom-power-menu label {
+    font-size: 18px;
+    padding-top: 2px;
+    padding-left: 2px;
+}

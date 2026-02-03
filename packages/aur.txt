@@ -1,0 +1,4 @@
+swww
+waypaper
+hyprpicker
+eww-wayland

@@ -1,0 +1,27 @@
+# ===== Arch / Linux =====
+*.log
+*.bak
+*.tmp
+.cache/
+.cache/*
+.cache/**
+
+# ===== Shell =====
+.zsh_history
+.zsh_sessions/
+
+# ===== Neovim =====
+config/nvim/.undo/
+config/nvim/.backup/
+config/nvim/.swap/
+
+# ===== System junk =====
+.DS_Store
+Thumbs.db
+
+# ===== Secrets (MUY IMPORTANTE) =====
+*.key
+*.pem
+*.secret
+.env
+.env.*

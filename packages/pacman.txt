@@ -1,0 +1,12 @@
+hyprland
+waybar
+kitty
+wofi
+rofi
+neovim
+ranger
+pipewire
+wireplumber
+xdg-desktop-portal-hyprland
+libnotify
+swaync
