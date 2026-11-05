@@ -1,4 +1,5 @@
-swww
-waypaper
-hyprpicker
-eww-wayland
+# Optional AUR packages. The installer does not install an AUR helper automatically.
+# Install these manually with your preferred AUR helper if desired:
+# swww
+# waypaper
+# eww-wayland
