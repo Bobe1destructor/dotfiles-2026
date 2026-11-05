@@ -24,6 +24,12 @@ echo "==> Creando respaldos y enlaces de configuración"
 bash "$DOTFILES/scripts/link.sh"
 
 echo
+echo "==> Preparando paletas de color de respaldo"
+mkdir -p "$HOME/.cache/wal"
+[[ -s "$HOME/.cache/wal/colors-hyprland.conf" ]] || cp "$DOTFILES/config/wal/defaults/colors-hyprland.conf" "$HOME/.cache/wal/colors-hyprland.conf"
+[[ -s "$HOME/.cache/wal/colors-waybar.css" ]] || cp "$DOTFILES/config/wal/defaults/colors-waybar.css" "$HOME/.cache/wal/colors-waybar.css"
+
+echo
 echo "==> Permisos de scripts"
 find "$DOTFILES/config/waybar/scripts" -maxdepth 1 -type f -name '*.sh' -exec chmod +x {} +
 chmod +x "$DOTFILES/config/waypaper/swww_wal.sh"
