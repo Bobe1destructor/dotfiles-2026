@@ -1,5 +1,6 @@
 # Core desktop and Waybar dependencies
 hyprland
+lua
 hyprlock
 waybar
 kitty
