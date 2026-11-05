@@ -143,7 +143,7 @@ hl.animation({ leaf = "workspacesOut", enabled = true, speed = 1.94, bezier = "a
 hl.animation({ leaf = "zoomFactor", enabled = true, speed = 7, bezier = "quick" })
 
 -- Main application shortcuts.
-hl.bind(main_mod .. " + RETURN", hl.dsp.exec_cmd(terminal))
+hl.bind(main_mod .. " + Return", hl.dsp.exec_cmd(terminal))
 hl.bind(main_mod .. " + Q", hl.dsp.window.close())
 hl.bind(main_mod .. " + M", hl.dsp.exec_cmd("hyprctl dispatch exit"))
 hl.bind(main_mod .. " + E", hl.dsp.exec_cmd(file_manager))
@@ -154,10 +154,10 @@ hl.bind(main_mod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(main_mod .. " + P", hl.dsp.window.pseudo())
 hl.bind(main_mod .. " + J", hl.dsp.layout("togglesplit"))
 
-hl.bind(main_mod .. " + LEFT", hl.dsp.focus({ direction = "left" }))
-hl.bind(main_mod .. " + RIGHT", hl.dsp.focus({ direction = "right" }))
-hl.bind(main_mod .. " + UP", hl.dsp.focus({ direction = "up" }))
-hl.bind(main_mod .. " + DOWN", hl.dsp.focus({ direction = "down" }))
+hl.bind(main_mod .. " + left", hl.dsp.focus({ direction = "left" }))
+hl.bind(main_mod .. " + right", hl.dsp.focus({ direction = "right" }))
+hl.bind(main_mod .. " + up", hl.dsp.focus({ direction = "up" }))
+hl.bind(main_mod .. " + down", hl.dsp.focus({ direction = "down" }))
 
 for i = 1, 10 do
     local key = i % 10
@@ -167,8 +167,8 @@ end
 
 hl.bind(main_mod .. " + S", hl.dsp.workspace.toggle_special("magic"))
 hl.bind(main_mod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
-hl.bind(main_mod .. " + MOUSE_DOWN", hl.dsp.focus({ workspace = "e+1" }))
-hl.bind(main_mod .. " + MOUSE_UP", hl.dsp.focus({ workspace = "e-1" }))
+hl.bind(main_mod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
+hl.bind(main_mod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
 hl.bind(main_mod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(main_mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
@@ -184,13 +184,13 @@ hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
 
--- Screenshot shortcuts. Output directory is created by the installer.
-local shots = home .. "/Pictures/Screenshots"
-hl.bind("PRINT", hl.dsp.exec_cmd("grim '" .. shots .. "/$(date +'%Y-%m-%d_%H-%M-%S').png' && notify-send 'Captura' 'Pantalla completa guardada'"))
-hl.bind("SHIFT + PRINT", hl.dsp.exec_cmd("grim -g \"$(slurp)\" '" .. shots .. "/$(date +'%Y-%m-%d_%H-%M-%S').png' && notify-send 'Captura' 'Región guardada'"))
-hl.bind("ALT + PRINT", hl.dsp.exec_cmd("grim -g \"$(hyprctl -j activewindow | jq -r '\''\"\\(.at[0]),\\(.at[1]) \\( .size[0])x\\(.size[1])\"'\'')\" '" .. shots .. "/$(date +'%Y-%m-%d_%H-%M-%S').png'"))
-hl.bind("CTRL + PRINT", hl.dsp.exec_cmd("grim - | wl-copy && notify-send 'Captura' 'Pantalla copiada'"))
-hl.bind("CTRL + SHIFT + PRINT", hl.dsp.exec_cmd("grim -g \"$(slurp)\" - | wl-copy && notify-send 'Captura' 'Región copiada'"))
+-- Screenshot shortcuts.
+local screenshot = home .. "/.config/hypr/scripts/screenshot.sh"
+hl.bind("Print", hl.dsp.exec_cmd(screenshot .. " full"))
+hl.bind("SHIFT + Print", hl.dsp.exec_cmd(screenshot .. " region"))
+hl.bind("ALT + Print", hl.dsp.exec_cmd(screenshot .. " window"))
+hl.bind("CTRL + Print", hl.dsp.exec_cmd(screenshot .. " copy-full"))
+hl.bind("CTRL + SHIFT + Print", hl.dsp.exec_cmd(screenshot .. " copy-region"))
 
 -- Start desktop services only after the compositor is ready.
 hl.on("hyprland.start", function()
