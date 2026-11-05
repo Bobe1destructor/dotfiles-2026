@@ -31,7 +31,7 @@
 
     "custom/launcher": {
         "format": "<span rise='1000'></span>", 
-        "on-click": "rofi -show drun",
+        "on-click": "wofi --show drun",
         "tooltip": false
     },
 
@@ -68,6 +68,7 @@
         "format": "", 
         "on-click": "playerctl previous",
         "tooltip": false,
+        "exec": "printf ''," ,
         "exec-if": "~/.config/waybar/scripts/check_music.sh"
     },
 
