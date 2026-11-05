@@ -1,25 +1,68 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
 
-DOTFILES="$HOME/dotfiles"
+DOTFILES="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 CONFIG="$DOTFILES/config"
+BACKUP_ROOT="$HOME/.config/dotfiles-backup-$(date +%Y%m%d-%H%M%S)"
 
-echo "🔗 Creando symlinks..."
+mkdir -p "$HOME/.config"
+linked=0
 
-mkdir -p ~/.config
+for source in "$CONFIG"/*; do
+    [[ -d "$source" ]] || continue
+    name="$(basename "$source")"
+    target="$HOME/.config/$name"
 
-for dir in dunst eww hypr kitty nvim ranger rofi wal waybar waypaper wofi; do
-  if [ -e "$HOME/.config/$dir" ] || [ -L "$HOME/.config/$dir" ]; then
-    echo "♻️  Reemplazando $dir"
-    rm -rf "$HOME/.config/$dir"
-  fi
-  ln -s "$CONFIG/$dir" "$HOME/.config/$dir"
+    # Cava writes its generated theme under ~/.config/cava/themes; keep that runtime data outside the repo.
+    if [[ "$name" == "cava" ]]; then
+        mkdir -p "$target"
+        if [[ ! -e "$target/config" ]]; then
+            cp "$source/config" "$target/config"
+            echo "[COPY] cava/config"
+        else
+            echo "[KEEP] existing cava/config"
+        fi
+        continue
+    fi
+
+    # Do not link empty placeholder configurations.
+    if [[ "$name" == "eww" ]] && [[ ! -s "$source/eww.yuck" || ! -s "$source/eww.scss" ]]; then
+        echo "[SKIP] eww: configuración vacía"
+        continue
+    fi
+
+    if [[ -L "$target" ]]; then
+        current="$(readlink -f "$target" || true)"
+        if [[ "$current" == "$source" ]]; then
+            echo "[OK] $name ya está enlazado"
+            continue
+        fi
+    fi
+
+    if [[ -e "$target" || -L "$target" ]]; then
+        mkdir -p "$BACKUP_ROOT"
+        mv -- "$target" "$BACKUP_ROOT/$name"
+        echo "[BACKUP] $target -> $BACKUP_ROOT/$name"
+    fi
+
+    ln -s -- "$source" "$target"
+    echo "[LINK] $name"
+    linked=$((linked + 1))
 done
 
-# zsh
-if [ -e "$HOME/.zshrc" ]; then
-  mv "$HOME/.zshrc" "$HOME/.zshrc.bak"
+if [[ -f "$DOTFILES/zsh/.zshrc" ]]; then
+    if [[ -L "$HOME/.zshrc" ]] && [[ "$(readlink -f "$HOME/.zshrc" || true)" == "$DOTFILES/zsh/.zshrc" ]]; then
+        echo "[OK] .zshrc ya está enlazado"
+    else
+        if [[ -e "$HOME/.zshrc" || -L "$HOME/.zshrc" ]]; then
+            mkdir -p "$BACKUP_ROOT"
+            mv -- "$HOME/.zshrc" "$BACKUP_ROOT/.zshrc"
+            echo "[BACKUP] ~/.zshrc -> $BACKUP_ROOT/.zshrc"
+        fi
+        ln -s -- "$DOTFILES/zsh/.zshrc" "$HOME/.zshrc"
+        echo "[LINK] .zshrc"
+    fi
 fi
-ln -s "$DOTFILES/zsh/.zshrc" "$HOME/.zshrc"
 
-echo "✅ Symlinks listos"
+echo "Enlaces creados: $linked"
+[[ -d "$BACKUP_ROOT" ]] && echo "Respaldos: $BACKUP_ROOT"

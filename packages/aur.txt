@@ -1,4 +1,6 @@
+# Optional AUR packages required for wallpaper workflow
 swww
 waypaper
-hyprpicker
-eww-wayland
+
+# Optional: Eww is currently an empty placeholder configuration
+# eww-wayland
