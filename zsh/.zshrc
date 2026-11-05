@@ -4,7 +4,7 @@ export PATH="$HOME/.local/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="afowler"
 ENABLE_CORRECTION="true"
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search)
+plugins=(git)
 
 if [[ -s "$ZSH/oh-my-zsh.sh" ]]; then
     source "$ZSH/oh-my-zsh.sh"
@@ -35,3 +35,8 @@ alias clean_aur='command -v yay >/dev/null && yay -Sc || echo "yay no está inst
 
 command -v fastfetch >/dev/null 2>&1 && fastfetch
 [[ -f "$HOME/.cache/wal/sequences" ]] && (cat "$HOME/.cache/wal/sequences" &)
+
+# Load Arch-packaged plugins when present. Syntax highlighting must be last.
+[[ -r /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -r /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh ]] && source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+[[ -r /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
