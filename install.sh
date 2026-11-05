@@ -8,16 +8,21 @@ if [[ ! -f /etc/arch-release ]]; then
     exit 1
 fi
 
-echo "==> Instalando dependencias oficiales"
+echo "==> Instalando dependencias oficiales (actualización completa de Arch)"
 mapfile -t PACMAN_PACKAGES < <(grep -Ev '^[[:space:]]*(#|$)' "$DOTFILES/packages/pacman.txt")
 if (("${#PACMAN_PACKAGES[@]}" > 0)); then
-    sudo pacman -S --needed "${PACMAN_PACKAGES[@]}"
+    sudo pacman -Syu --needed "${PACMAN_PACKAGES[@]}"
 fi
 
 echo
 echo "==> AUR"
 echo "No se instalará yay ni se ejecutará código AUR automáticamente."
-echo "Los paquetes opcionales están documentados en packages/aur.txt."
+if command -v yay >/dev/null 2>&1; then
+    mapfile -t AUR_PACKAGES < <(grep -Ev '^[[:space:]]*(#|$)' "$DOTFILES/packages/aur.txt")
+    if (("${#AUR_PACKAGES[@]}" > 0)); then yay -S --needed "${AUR_PACKAGES[@]}"; fi
+else
+    echo "yay no está instalado. Instala swww y waypaper desde AUR para habilitar los fondos dinámicos."
+fi
 
 echo
 echo "==> Creando respaldos y enlaces de configuración"
@@ -25,7 +30,7 @@ bash "$DOTFILES/scripts/link.sh"
 
 echo
 echo "==> Preparando paletas de color de respaldo"
-mkdir -p "$HOME/.cache/wal"
+mkdir -p "$HOME/.cache/wal" "$HOME/Pictures/Screenshots"
 [[ -s "$HOME/.cache/wal/colors-hyprland.conf" ]] || cp "$DOTFILES/config/wal/defaults/colors-hyprland.conf" "$HOME/.cache/wal/colors-hyprland.conf"
 [[ -s "$HOME/.cache/wal/colors-waybar.css" ]] || cp "$DOTFILES/config/wal/defaults/colors-waybar.css" "$HOME/.cache/wal/colors-waybar.css"
 
@@ -36,7 +41,7 @@ chmod +x "$DOTFILES/config/waypaper/swww_wal.sh"
 
 echo
 echo "==> Comprobaciones"
-for script in "$DOTFILES"/config/waybar/scripts/*.sh; do
+for script in "$DOTFILES"/config/waybar/scripts/*.sh "$DOTFILES/config/waypaper/swww_wal.sh"; do
     bash -n "$script"
 done
 
