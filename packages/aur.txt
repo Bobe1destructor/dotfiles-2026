@@ -1,6 +1,7 @@
-# Optional AUR packages required for wallpaper workflow
+# Wallpaper and color workflow
 swww
 waypaper
+python-pywal16
 
 # Optional: Eww is currently an empty placeholder configuration
 # eww-wayland
