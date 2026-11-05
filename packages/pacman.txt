@@ -17,6 +17,7 @@ xdg-desktop-portal-gtk
 libnotify
 swaync
 playerctl
+cava
 pavucontrol
 brightnessctl
 grim
