@@ -1,54 +1,44 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
 
-DOTFILES="$(cd "$(dirname "$0")" && pwd)"
+DOTFILES="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
-echo "==> Actualizando sistema"
-sudo pacman -Syu --noconfirm
-
-echo "==> Instalando paquetes pacman"
-sudo pacman -S --needed --noconfirm $(grep -v '^#' "$DOTFILES/packages/pacman.txt")
-
-echo "==> Instalando yay (si no existe)"
-if ! command -v yay &>/dev/null; then
-  sudo pacman -S --needed --noconfirm git base-devel
-  cd /tmp
-  git clone https://aur.archlinux.org/yay.git
-  cd yay
-  makepkg -si --noconfirm
+if [[ ! -f /etc/arch-release ]]; then
+    echo "Este instalador está preparado para Arch Linux y derivados."
+    exit 1
 fi
 
-echo "==> Instalando paquetes AUR"
-yay -S --needed --noconfirm $(grep -v '^#' "$DOTFILES/packages/aur.txt")
+echo "==> Instalando dependencias oficiales"
+mapfile -t PACMAN_PACKAGES < <(grep -Ev '^[[:space:]]*(#|$)' "$DOTFILES/packages/pacman.txt")
+if (("${#PACMAN_PACKAGES[@]}" > 0)); then
+    sudo pacman -S --needed "${PACMAN_PACKAGES[@]}"
+fi
 
-echo "==> Creando symlinks de ~/.config"
-mkdir -p ~/.config
+echo
+echo "==> AUR"
+echo "No se instalará yay ni se ejecutará código AUR automáticamente."
+echo "Los paquetes opcionales están documentados en packages/aur.txt."
 
-for dir in "$DOTFILES"/config/*; do
-  name=$(basename "$dir")
-  target="$HOME/.config/$name"
+echo
+echo "==> Creando respaldos y enlaces de configuración"
+bash "$DOTFILES/scripts/link.sh"
 
-  if [ -e "$target" ] || [ -L "$target" ]; then
-    rm -rf "$target"
-  fi
+echo
+echo "==> Permisos de scripts"
+find "$DOTFILES/config/waybar/scripts" -maxdepth 1 -type f -name '*.sh' -exec chmod +x {} +
 
-  ln -s "$dir" "$target"
-  echo "  -> $name"
+echo
+echo "==> Comprobaciones"
+for script in "$DOTFILES"/config/waybar/scripts/*.sh; do
+    bash -n "$script"
 done
 
-echo "==> ZSH"
-if [ -f "$DOTFILES/zsh/.zshrc" ]; then
-  rm -f ~/.zshrc
-  ln -s "$DOTFILES/zsh/.zshrc" ~/.zshrc
+echo
+echo "==> GPU"
+if lspci | grep -qi 'NVIDIA'; then
+    echo "NVIDIA detectada. No se modificarán los controladores instalados."
 fi
 
-echo "==> Detectando NVIDIA"
-if lspci | grep -i nvidia &>/dev/null; then
-  echo "NVIDIA detectada"
-  sudo pacman -S --needed --noconfirm nvidia nvidia-utils nvidia-settings
-fi
-
-echo "==> Recargando servicios"
-systemctl --user restart pipewire wireplumber || true
-
-echo "==> DONE ✅ Reinicia sesión para aplicar todo"
+echo
+echo "Instalación base terminada."
+echo "Reinicia Hyprland o cierra y vuelve a iniciar sesión."
