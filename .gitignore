@@ -25,3 +25,6 @@ Thumbs.db
 *.secret
 .env
 .env.*
+
+# Runtime-generated Pywal link
+config/waybar/colors-waybar.css
