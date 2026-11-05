@@ -10,6 +10,8 @@ neovim
 ranger
 pipewire
 wireplumber
+power-profiles-daemon
+python-gobject
 pipewire-pulse
 xdg-desktop-portal
 xdg-desktop-portal-hyprland
@@ -25,6 +27,7 @@ slurp
 wl-clipboard
 jq
 hyprpicker
+qt6ct
 python-pywal
 fastfetch
 zsh
