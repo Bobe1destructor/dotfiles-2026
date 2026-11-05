@@ -69,6 +69,7 @@
         "on-click": "playerctl previous",
         "tooltip": false,
         "exec": "printf ''," ,
+        "exec": "printf ''," ,
         "exec-if": "~/.config/waybar/scripts/check_music.sh"
     },
 
@@ -88,6 +89,7 @@
         "format": "", 
         "on-click": "playerctl next",
         "tooltip": false,
+        "exec": "printf ''," ,
         "exec-if": "~/.config/waybar/scripts/check_music.sh"
     },
 
