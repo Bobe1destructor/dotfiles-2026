@@ -1,4 +1,4 @@
-@import "/home/raul/.cache/wal/colors-waybar.css";
+@import "../../.cache/wal/colors-waybar.css";
 * {
     border: none;
     border-radius: 0;
@@ -58,10 +58,7 @@ window#waybar {
     border-radius: 8px;
 }
 
-#workspaces button.active {
-    color: @color2;
-}
-
+#workspaces button.active { color: @color2; }
 #workspaces button:hover {
     background: @color7;
     color: @background;
