@@ -28,6 +28,7 @@ python-pywal
 fastfetch
 zsh
 git
+curl
 networkmanager
 ttf-jetbrains-mono-nerd
 noto-fonts
