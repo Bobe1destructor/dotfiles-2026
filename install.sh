@@ -35,7 +35,7 @@ bash "$DOTFILES/scripts/link.sh"
 echo
 echo "==> Preparando paletas de color de respaldo"
 mkdir -p "$HOME/.cache/wal" "$HOME/Pictures/Screenshots"
-[[ -s "$HOME/.cache/wal/colors-hyprland.conf" ]] || cp "$DOTFILES/config/wal/defaults/colors-hyprland.conf" "$HOME/.cache/wal/colors-hyprland.conf"
+[[ -s "$HOME/.cache/wal/colors-hyprland.lua" ]] || cp "$DOTFILES/config/wal/defaults/colors-hyprland.lua" "$HOME/.cache/wal/colors-hyprland.lua"
 [[ -s "$HOME/.cache/wal/colors-waybar.css" ]] || cp "$DOTFILES/config/wal/defaults/colors-waybar.css" "$HOME/.cache/wal/colors-waybar.css"
 [[ -s "$HOME/.cache/wal/colors-kitty.conf" ]] || cp "$DOTFILES/config/wal/defaults/colors-kitty.conf" "$HOME/.cache/wal/colors-kitty.conf"
 ln -sfn "$HOME/.cache/wal/colors-waybar.css" "$DOTFILES/config/waybar/colors-waybar.css"
@@ -44,12 +44,12 @@ mkdir -p "$HOME/.config/cava/themes"
 
 echo
 echo "==> Permisos de scripts"
-find "$DOTFILES/config/waybar/scripts" -maxdepth 1 -type f -name '*.sh' -exec chmod +x {} +
+find "$DOTFILES/config/waybar/scripts" "$DOTFILES/config/hypr/scripts" -maxdepth 1 -type f -name '*.sh' -exec chmod +x {} +
 chmod +x "$DOTFILES/config/waypaper/swww_wal.sh"
 
 echo
 echo "==> Comprobaciones"
-for script in "$DOTFILES"/config/waybar/scripts/*.sh "$DOTFILES/config/waypaper/swww_wal.sh"; do
+for script in "$DOTFILES"/config/waybar/scripts/*.sh "$DOTFILES"/config/hypr/scripts/*.sh "$DOTFILES/config/waypaper/swww_wal.sh"; do
     bash -n "$script"
 done
 
