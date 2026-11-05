@@ -52,6 +52,7 @@ echo "==> Comprobaciones"
 for script in "$DOTFILES"/config/waybar/scripts/*.sh "$DOTFILES"/config/hypr/scripts/*.sh "$DOTFILES/config/waypaper/swww_wal.sh"; do
     bash -n "$script"
 done
+luac -p "$DOTFILES/config/hypr/hyprland.lua" "$DOTFILES/config/wal/defaults/colors-hyprland.lua"
 
 echo
 echo "==> GPU"
