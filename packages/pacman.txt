@@ -31,6 +31,9 @@ qt6ct
 python-pywal
 fastfetch
 zsh
+zsh-autosuggestions
+zsh-syntax-highlighting
+zsh-history-substring-search
 git
 curl
 networkmanager
