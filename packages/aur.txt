@@ -1,5 +1,6 @@
-# Optional AUR packages. The installer does not install an AUR helper automatically.
-# Install these manually with your preferred AUR helper if desired:
-# swww
-# waypaper
+# Optional AUR packages required for wallpaper workflow
+swww
+waypaper
+
+# Optional: Eww is currently an empty placeholder configuration
 # eww-wayland
