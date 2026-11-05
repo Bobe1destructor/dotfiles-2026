@@ -14,6 +14,10 @@ if (("${#PACMAN_PACKAGES[@]}" > 0)); then
     sudo pacman -Syu --needed "${PACMAN_PACKAGES[@]}"
 fi
 
+if pacman -Q power-profiles-daemon >/dev/null 2>&1; then
+    sudo systemctl enable --now power-profiles-daemon.service
+fi
+
 echo
 echo "==> AUR"
 echo "No se instalará yay ni se ejecutará código AUR automáticamente."
