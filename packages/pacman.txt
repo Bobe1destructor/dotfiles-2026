@@ -13,7 +13,7 @@ wireplumber
 pipewire-pulse
 xdg-desktop-portal
 xdg-desktop-portal-hyprland
-xdg-desktop-portal-kde
+xdg-desktop-portal-gtk
 libnotify
 swaync
 playerctl
@@ -29,3 +29,6 @@ fastfetch
 zsh
 git
 networkmanager
+ttf-jetbrains-mono-nerd
+noto-fonts
+noto-fonts-emoji
