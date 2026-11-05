@@ -33,6 +33,7 @@ echo "==> Preparando paletas de color de respaldo"
 mkdir -p "$HOME/.cache/wal" "$HOME/Pictures/Screenshots"
 [[ -s "$HOME/.cache/wal/colors-hyprland.conf" ]] || cp "$DOTFILES/config/wal/defaults/colors-hyprland.conf" "$HOME/.cache/wal/colors-hyprland.conf"
 [[ -s "$HOME/.cache/wal/colors-waybar.css" ]] || cp "$DOTFILES/config/wal/defaults/colors-waybar.css" "$HOME/.cache/wal/colors-waybar.css"
+[[ -s "$HOME/.cache/wal/colors-kitty.conf" ]] || cp "$DOTFILES/config/wal/defaults/colors-kitty.conf" "$HOME/.cache/wal/colors-kitty.conf"
 
 echo
 echo "==> Permisos de scripts"
