@@ -29,7 +29,6 @@ wl-clipboard
 jq
 hyprpicker
 qt6ct
-python-pywal
 fastfetch
 zsh
 zsh-autosuggestions
