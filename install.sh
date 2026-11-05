@@ -26,6 +26,7 @@ bash "$DOTFILES/scripts/link.sh"
 echo
 echo "==> Permisos de scripts"
 find "$DOTFILES/config/waybar/scripts" -maxdepth 1 -type f -name '*.sh' -exec chmod +x {} +
+chmod +x "$DOTFILES/config/waypaper/swww_wal.sh"
 
 echo
 echo "==> Comprobaciones"
