@@ -13,6 +13,18 @@ for source in "$CONFIG"/*; do
     name="$(basename "$source")"
     target="$HOME/.config/$name"
 
+    # Cava writes its generated theme under ~/.config/cava/themes; keep that runtime data outside the repo.
+    if [[ "$name" == "cava" ]]; then
+        mkdir -p "$target"
+        if [[ ! -e "$target/config" ]]; then
+            cp "$source/config" "$target/config"
+            echo "[COPY] cava/config"
+        else
+            echo "[KEEP] existing cava/config"
+        fi
+        continue
+    fi
+
     # Do not link empty placeholder configurations.
     if [[ "$name" == "eww" ]] && [[ ! -s "$source/eww.yuck" || ! -s "$source/eww.scss" ]]; then
         echo "[SKIP] eww: configuración vacía"
