@@ -15,6 +15,13 @@ fi
 # Waypaper/swww ya aplica el fondo. Pywal solo genera la paleta.
 wal -n -i "$WALLPAPER"
 
+# Aplicar el tema de Cava generado por la plantilla de Pywal.
+if [[ -s "$HOME/.cache/wal/cava" ]]; then
+    mkdir -p "$HOME/.config/cava/themes"
+    cp "$HOME/.cache/wal/cava" "$HOME/.config/cava/themes/wal"
+    pkill -USR1 cava 2>/dev/null || true
+fi
+
 # Aplicar colores nuevos sin cerrar la sesión.
 if command -v hyprctl >/dev/null 2>&1; then
     hyprctl reload >/dev/null 2>&1 || true
